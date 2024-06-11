@@ -1,5 +1,6 @@
 //https://stackoverflow.com/questions/29971898/how-to-create-an-accurate-timer-in-javascript
 //https://sensor-js.xyz/demo.html
+//https://www.tutorialspoint.com/how-to-create-and-save-text-file-in-javascript
 
 start = Date.now()
 running = false
@@ -27,6 +28,7 @@ function TimerButton() {
 		for(snapshot of accelerationData){
 			document.getElementById("acceleration_data").innerHTML += JSON.stringify(snapshot) + "<br>"
 		}
+		downloadAccelerationProfile()
 		
 		window.removeEventListener("devicemotion", handleMotion);
 		accelerationData = []
@@ -47,4 +49,14 @@ function handleMotion(event) {
 	}
 }
 
+
+function downloadAccelerationProfile() {
+    const link = document.createElement("a");
+    const content = JSON.stringify(accelerationData)
+    const file = new Blob([content], { type: 'text/plain' });
+    link.href = URL.createObjectURL(file);
+    link.download = "acceleration_profile.txt";
+    link.click();
+    URL.revokeObjectURL(link.href);
+};
 
