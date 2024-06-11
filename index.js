@@ -19,20 +19,24 @@ function TimerButton() {
 			elapsed = (Date.now() - start)/1000
 		}, 10);
 		
-		handleMotion(event)
+		handleMotion(event, elapsed)
 	}
 			
 	else if(running){
+		console.log(accelerationData)
 		window.removeEventListener("devicemotion", handleMotion);
+		accelerationData = []
 		
 		running = false
 		elapsed = 0
 		clearInterval(clockID)
+		
 	}
 }
 
-function handleMotion(event) {	
+function handleMotion(event, time) {	
 	if(event.acceleration && event.acceleration.x && event.acceleration.y && event.acceleration.z){
+		accelerationData.push({"time": time, "x": event.acceleration.x, "y": event.acceleration.y, "z": event.acceleration.z})
 		document.getElementById("x_acceleration").innerHTML = event.acceleration.x.toFixed(5)
 		document.getElementById("y_acceleration").innerHTML = event.acceleration.y.toFixed(5)
 		document.getElementById("z_acceleration").innerHTML = event.acceleration.z.toFixed(5)
