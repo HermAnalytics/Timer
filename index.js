@@ -5,6 +5,7 @@ start = Date.now()
 running = false
 elapsed = 0
 clockID = null
+accelerationData = []
 
 function TimerButton() {
 	if(!running){
@@ -30,22 +31,12 @@ function TimerButton() {
 	}
 }
 
-function handleMotion(event) {
-	//if(event.accelerationIncludingGravity){
-	//	updateValue("x_acceleration", event.accelerationIncludingGravity.x)
-	//	updateValue("y_acceleration", event.accelerationIncludingGravity.y)
-	//	updateValue("z_acceleration", event.accelerationIncludingGravity.z)
-	//}
-	
-	if(event.acceleration){
-		updateValue("x_acceleration", event.acceleration.x)
-		updateValue("y_acceleration", event.acceleration.y)
-		updateValue("z_acceleration", event.acceleration.z)
+function handleMotion(event) {	
+	if(event.acceleration && event.acceleration.x && event.acceleration.y && event.acceleration.z){
+		document.getElementById("x_acceleration").innerHTML = event.acceleration.x.toFixed(5)
+		document.getElementById("y_acceleration").innerHTML = event.acceleration.y.toFixed(5)
+		document.getElementById("z_acceleration").innerHTML = event.acceleration.z.toFixed(5)
 	}
 }
 
-function updateValue(name, value){
-  if (value != null)
-    document.getElementById(name).innerHTML = value.toFixed(5)
-}
 
