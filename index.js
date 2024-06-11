@@ -9,6 +9,7 @@ accelerationData = []
 
 function TimerButton() {
 	if(!running){
+		document.getElementById("acceleration_data").innerHTML = ""
 		window.addEventListener("devicemotion", handleMotion);
 		stopped = false
 		running = true
