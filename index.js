@@ -42,7 +42,7 @@ function TimerButton() {
 function handleMotion(event) {	
 	if(event.acceleration && event.acceleration.x && event.acceleration.y && event.acceleration.z){
 		//Hopefully using elapsed time doesnt introduce a delay. I couldnt get elapsed to send with the event, so there may be a delay between when the event happened and the time it uses
-		accelerationData.push({"time": elapsed, "x": event.acceleration.x, "y": event.acceleration.y, "z": event.acceleration.z})
+		accelerationData.push({"time": elapsed, "x": event.acceleration.x.toFixed(5), "y": event.acceleration.y.toFixed(5), "z": event.acceleration.z.toFixed(5)})
 		document.getElementById("x_acceleration").innerHTML = event.acceleration.x.toFixed(5)
 		document.getElementById("y_acceleration").innerHTML = event.acceleration.y.toFixed(5)
 		document.getElementById("z_acceleration").innerHTML = event.acceleration.z.toFixed(5)
