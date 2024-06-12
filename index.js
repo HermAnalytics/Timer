@@ -47,6 +47,7 @@ function handleMotion(event) {
 //https://stackoverflow.com/questions/30216167/chartjs-plot-data-based-with-unequal-time-intervals
 //https://dima117.github.io/Chart.Scatter/
 //https://www.tutorialspoint.com/chartjs/chartjs_scatter_chart.htm
+//https://stackoverflow.com/questions/46232699/display-line-chart-with-connected-dots-using-chartjs
 function makeCharts(accelerationData){
 	xData = []
 	yData = []
@@ -62,15 +63,23 @@ function makeCharts(accelerationData){
 		border.push("black")
 	}
 	
-	var chrt = document.getElementById("chart").getContext("2d");
+	makeChart("x", xData)
+	makeChart("y", yData)
+	makeChart("z", zData)
+}
+
+function makeChart(id, data){
+	var chrt = document.getElementById("chart"+id).getContext("2d");
     var chartId = new Chart(chrt, {
 		type: 'scatter',
         data: {
             datasets: [{
-				label: "x acceleration",
-				data: xData,
+				label: id + " acceleration",
+				data: data,
 				backgroundColor: color,
 				borderColor: border,
+				fill: false,
+				showLine: true,
 				radius: 2,
 			}],
 		},
