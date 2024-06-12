@@ -55,8 +55,8 @@ function makeCharts(accelerationData){
 	yData = []
 	zData = []
 	red = []
-	green = []
-	blue = []
+	yellow = []
+	orange = []
 	black = []
 	
 	for(snapshot of accelerationData){
@@ -64,17 +64,18 @@ function makeCharts(accelerationData){
 		yData.push({"x": snapshot["time"], "y": snapshot["y"]})
 		zData.push({"x": snapshot["time"], "y": snapshot["z"]})
 		red.push("red")
-		green.push("green")
-		blue.push("blue")
+		yellow.push("yellow")
+		orange.push("orange")
 		black.push("black")
 	}
 	
-	makeChart("x", xData, red, black)
-	makeChart("y", yData, green, black)
-	makeChart("z", zData, blue, black)
+	makeChart("x", xData, red)
+	makeChart("y", yData, yellow)
+	makeChart("z", zData, orange)
 }
 
-function makeChart(id, data, pointColor, borderColor){
+//https://www.chartjs.org/docs/latest/charts/line.html
+function makeChart(id, data, pointColor){
 	var chrt = document.getElementById("chart"+id).getContext("2d");
     var chartId = new Chart(chrt, {
 		type: 'scatter',
@@ -83,7 +84,7 @@ function makeChart(id, data, pointColor, borderColor){
 				label: id + " acceleration",
 				data: data,
 				backgroundColor: pointColor,
-				borderColor: borderColor,
+				borderColor: "black",
 				fill: false,
 				showLine: true,
 				radius: 2,
