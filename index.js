@@ -37,7 +37,7 @@ function TimerButton() {
 
 function handleMotion(event) {	
 	if(event.acceleration && event.acceleration.x && event.acceleration.y && event.acceleration.z){
-		accelerationData.push({"time": (((event.timeStamp + dateLoaded) - start)/1000).toFixed(3), "x": event.acceleration.x.toFixed(5), "y": event.acceleration.y.toFixed(5), "z": event.acceleration.z.toFixed(5)})
+		accelerationData.push({"time": elapsed, "x": event.acceleration.x.toFixed(5), "y": event.acceleration.y.toFixed(5), "z": event.acceleration.z.toFixed(5)})
 		document.getElementById("x_acceleration").innerHTML = event.acceleration.x.toFixed(5)
 		document.getElementById("y_acceleration").innerHTML = event.acceleration.y.toFixed(5)
 		document.getElementById("z_acceleration").innerHTML = event.acceleration.z.toFixed(5)
