@@ -25,18 +25,12 @@ function TimerButton() {
 	}
 			
 	else if(running){
-		times = []
-		xAccelerations = []
-		for(snapshot of accelerationData){
-			times.push(snapshot["time"])
-			xAccelerations.push(snapshot["x"])
-		}
 		window.removeEventListener("devicemotion", handleMotion);
-		accelerationData = []
 		running = false
 		elapsed = 0
 		clearInterval(clockID)
-		makeChart(times, xAccelerations)
+		makeCharts(accelerationData)
+		accelerationData = []
 	}
 }
 
@@ -53,25 +47,31 @@ function handleMotion(event) {
 //https://stackoverflow.com/questions/30216167/chartjs-plot-data-based-with-unequal-time-intervals
 //https://dima117.github.io/Chart.Scatter/
 //https://www.tutorialspoint.com/chartjs/chartjs_scatter_chart.htm
-function makeChart(xValues, yValues){
+function makeCharts(accelerationData){
+	xData = []
+	yData = []
+	zData = []
+	color = []
+	border = []
+	
+	for(snapshot of accelerationData){
+		xData.push({"x": snapshot["time"], "y": snapshot["x"]})
+		yData.push({"x": snapshot["time"], "y": snapshot["y"]})
+		zData.push({"x": snapshot["time"], "y": snapshot["z"]})
+		color.push("red")
+		border.push("black")
+	}
+	
 	var chrt = document.getElementById("chart").getContext("2d");
     var chartId = new Chart(chrt, {
 		type: 'scatter',
         data: {
-			labels: ["HTML", "CSS", "JAVASCRIPT", "CHART.JS", "JQUERY", "BOOTSTRP"],
             datasets: [{
-				label: "online tutorial subjects",
-				data: [
-					{x:10, y:14},
-					{x:25, y:35},
-					{x:21, y:20},
-					{x:35, y:28},
-					{x:15, y:10},
-					{x:19, y:30},
-				],
-				backgroundColor: ['yellow', 'aqua', 'pink', 'lightgreen', 'gold', 'lightblue'],
-				borderColor: ['black'],
-				radius: 8,
+				label: "x acceleration",
+				data: xData,
+				backgroundColor: color,
+				borderColor: border,
+				radius: 2,
 			}],
 		},
         options: {
