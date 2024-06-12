@@ -48,27 +48,33 @@ function handleMotion(event) {
 //https://dima117.github.io/Chart.Scatter/
 //https://www.tutorialspoint.com/chartjs/chartjs_scatter_chart.htm
 //https://stackoverflow.com/questions/46232699/display-line-chart-with-connected-dots-using-chartjs
+//https://stackoverflow.com/questions/42768494/how-to-remove-rectangle-box-next-to-the-legend-text-in-chart-js
+//https://github.com/chartjs/Chart.js/discussions/11441
 function makeCharts(accelerationData){
 	xData = []
 	yData = []
 	zData = []
-	color = []
-	border = []
+	red = []
+	green = []
+	blue = []
+	black = []
 	
 	for(snapshot of accelerationData){
 		xData.push({"x": snapshot["time"], "y": snapshot["x"]})
 		yData.push({"x": snapshot["time"], "y": snapshot["y"]})
 		zData.push({"x": snapshot["time"], "y": snapshot["z"]})
-		color.push("red")
-		border.push("black")
+		red.push("red")
+		green.push("green")
+		blue.push("blue")
+		black.push("black")
 	}
 	
-	makeChart("x", xData)
-	makeChart("y", yData)
-	makeChart("z", zData)
+	makeChart("x", xData, red, black)
+	makeChart("y", yData, green, black)
+	makeChart("z", zData, blue, black)
 }
 
-function makeChart(id, data){
+function makeChart(id, data, pointColor, borderColor){
 	var chrt = document.getElementById("chart"+id).getContext("2d");
     var chartId = new Chart(chrt, {
 		type: 'scatter',
@@ -76,8 +82,8 @@ function makeChart(id, data){
             datasets: [{
 				label: id + " acceleration",
 				data: data,
-				backgroundColor: color,
-				borderColor: border,
+				backgroundColor: pointColor,
+				borderColor: borderColor,
 				fill: false,
 				showLine: true,
 				radius: 2,
@@ -85,6 +91,11 @@ function makeChart(id, data){
 		},
         options: {
 			responsive: false,
+			legend: {
+				labels: {
+					boxWidth: 0,
+				}
+			},
             scales: {
 				x: {
 					type: 'linear',
