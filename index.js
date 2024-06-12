@@ -2,6 +2,7 @@
 //https://sensor-js.xyz/demo.html
 //https://www.tutorialspoint.com/how-to-create-and-save-text-file-in-javascript
 
+dateLoaded = Date.now()
 start = Date.now()
 running = false
 elapsed = 0
@@ -26,32 +27,28 @@ function TimerButton() {
 			
 	else if(running){
 		downloadAccelerationProfile()
-		
 		window.removeEventListener("devicemotion", handleMotion);
 		accelerationData = []
 		running = false
 		elapsed = 0
 		clearInterval(clockID)
-		
 	}
 }
 
 function handleMotion(event) {	
-	console.log(event)
 	if(event.acceleration && event.acceleration.x && event.acceleration.y && event.acceleration.z){
-		//Hopefully using elapsed time doesnt introduce a delay. I couldnt get elapsed to send with the event, so there may be a delay between when the event happened and the time it uses
-		accelerationData.push({"time": elapsed, "x": event.acceleration.x.toFixed(5), "y": event.acceleration.y.toFixed(5), "z": event.acceleration.z.toFixed(5)})
+		accelerationData.push({"time": (((event.timeStamp + dateLoaded) - start)/1000).toFixed(3), "x": event.acceleration.x.toFixed(5), "y": event.acceleration.y.toFixed(5), "z": event.acceleration.z.toFixed(5)})
 		document.getElementById("x_acceleration").innerHTML = event.acceleration.x.toFixed(5)
 		document.getElementById("y_acceleration").innerHTML = event.acceleration.y.toFixed(5)
 		document.getElementById("z_acceleration").innerHTML = event.acceleration.z.toFixed(5)
 	}
 	
-	if(event.accelerationIncludingGravity && event.accelerationIncludingGravity.x && event.accelerationIncludingGravity.y && event.accelerationIncludingGravity.z){
-		gAccelerationData.push({"time": elapsed, "x": event.accelerationIncludingGravity.x.toFixed(5), "y": event.accelerationIncludingGravity.y.toFixed(5), "z": event.accelerationIncludingGravity.z.toFixed(5)})
-		document.getElementById("gx_acceleration").innerHTML = event.accelerationIncludingGravity.x.toFixed(5)
-		document.getElementById("gy_acceleration").innerHTML = event.accelerationIncludingGravity.y.toFixed(5)
-		document.getElementById("gz_acceleration").innerHTML = event.accelerationIncludingGravity.z.toFixed(5)
-	}
+	//if(event.accelerationIncludingGravity && event.accelerationIncludingGravity.x && event.accelerationIncludingGravity.y && event.accelerationIncludingGravity.z){
+	//	gAccelerationData.push({"time": event.timeStamp, "x": event.accelerationIncludingGravity.x.toFixed(5), "y": event.accelerationIncludingGravity.y.toFixed(5), "z": event.accelerationIncludingGravity.z.toFixed(5)})
+	//	document.getElementById("gx_acceleration").innerHTML = event.accelerationIncludingGravity.x.toFixed(5)
+	//	document.getElementById("gy_acceleration").innerHTML = event.accelerationIncludingGravity.y.toFixed(5)
+	//	document.getElementById("gz_acceleration").innerHTML = event.accelerationIncludingGravity.z.toFixed(5)
+	//}
 }
 
 
