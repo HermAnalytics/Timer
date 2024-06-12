@@ -87,9 +87,9 @@ function makeChart(id, data, pointColor){
 				borderColor: "black",
 				fill: false,
 				showLine: true,
+				tension: 0,
 				borderWidth: 1.5,
 				radius: 2,
-				tension: 0
 			}],
 		},
         options: {
