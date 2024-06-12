@@ -29,14 +29,13 @@ function TimerButton() {
 		xAccelerations = []
 		for(snapshot of accelerationData){
 			times.push(snapshot["time"])
-			xAccelerations.push(snapshot["x_acceleration"])
+			xAccelerations.push(snapshot["x"])
 		}
 		window.removeEventListener("devicemotion", handleMotion);
 		accelerationData = []
 		running = false
 		elapsed = 0
 		clearInterval(clockID)
-		
 		makeChart(times, xAccelerations)
 	}
 }
@@ -52,24 +51,27 @@ function handleMotion(event) {
 }
 
 function makeChart(xValues, yValues){
-	new Chart("chart", {
-	type: "line",
-	data: {
-		labels: xValues,
-		datasets: [{
-		fill: false,
-		lineTension: 0,
-		backgroundColor: "rgba(0,0,255,1.0)",
-		borderColor: "rgba(0,0,255,0.1)",
-		data: yValues
-		}]
-	},
-	options: {
-		legend: {display: false},
-		scales: {
-		yAxes: [{ticks: {min: 6, max:16}}],
-	}
-  }
-});
+		new Chart("chart", {
+			type: "line",
+			data: {
+				labels: xValues,
+				datasets: [{
+				fill: false,
+				lineTension: 0,
+				backgroundColor: "rgba(0,0,255,1.0)",
+				borderColor: "rgba(0,0,255,0.1)",
+				data: yValues
+				}]
+			},
+			options: {
+				legend: {display: false},
+				scales: {
+				yAxes: [{ticks: {
+					min: Math.min.apply(this, yValues), 
+					max: Math.max.apply(this, yValues)
+				}}],
+			}
+		}
+	});
 }
 
