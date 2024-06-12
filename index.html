@@ -3,6 +3,7 @@
 <head>
 <link rel="stylesheet" href="index.css">
 </head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <body>
  
 <!-- Include Height, Weight, Age, and Gender --> 
@@ -13,9 +14,7 @@
 <li>y accel: <span id="y_acceleration">0.00000</span><span> m/s<sup>2</sup></span></li>
 <li>z accel: <span id="z_acceleration">0.00000</span><span> m/s<sup>2</sup></span></li>
 <br>
-<li>x accel: <span id="gx_acceleration">0.00000</span><span> m/s<sup>2</sup></span></li>
-<li>y accel: <span id="gy_acceleration">0.00000</span><span> m/s<sup>2</sup></span></li>
-<li>z accel: <span id="gz_acceleration">0.00000</span><span> m/s<sup>2</sup></span></li>
+<canvas id="chart" style="width:100%;max-width:600px"></canvas>
 
 </body>
- <script src="index.js"></script> 
+<script src="index.js"></script> 
