@@ -7,10 +7,10 @@ running = false
 elapsed = 0
 clockID = null
 accelerationData = []
+gAccelerationData = []
 
 function TimerButton() {
 	if(!running){
-		document.getElementById("acceleration_data").innerHTML = ""
 		window.addEventListener("devicemotion", handleMotion);
 		stopped = false
 		running = true
@@ -25,9 +25,6 @@ function TimerButton() {
 	}
 			
 	else if(running){
-		for(snapshot of accelerationData){
-			document.getElementById("acceleration_data").innerHTML += JSON.stringify(snapshot) + "<br>"
-		}
 		downloadAccelerationProfile()
 		
 		window.removeEventListener("devicemotion", handleMotion);
@@ -40,6 +37,7 @@ function TimerButton() {
 }
 
 function handleMotion(event) {	
+	console.log(event)
 	if(event.acceleration && event.acceleration.x && event.acceleration.y && event.acceleration.z){
 		//Hopefully using elapsed time doesnt introduce a delay. I couldnt get elapsed to send with the event, so there may be a delay between when the event happened and the time it uses
 		accelerationData.push({"time": elapsed, "x": event.acceleration.x.toFixed(5), "y": event.acceleration.y.toFixed(5), "z": event.acceleration.z.toFixed(5)})
@@ -47,12 +45,19 @@ function handleMotion(event) {
 		document.getElementById("y_acceleration").innerHTML = event.acceleration.y.toFixed(5)
 		document.getElementById("z_acceleration").innerHTML = event.acceleration.z.toFixed(5)
 	}
+	
+	if(event.accelerationIncludingGravity && event.accelerationIncludingGravity.x && event.accelerationIncludingGravity.y && event.accelerationIncludingGravity.z){
+		gAccelerationData.push({"time": elapsed, "x": event.accelerationIncludingGravity.x.toFixed(5), "y": event.accelerationIncludingGravity.y.toFixed(5), "z": event.accelerationIncludingGravity.z.toFixed(5)})
+		document.getElementById("gx_acceleration").innerHTML = event.accelerationIncludingGravity.x.toFixed(5)
+		document.getElementById("gy_acceleration").innerHTML = event.accelerationIncludingGravity.y.toFixed(5)
+		document.getElementById("gz_acceleration").innerHTML = event.accelerationIncludingGravity.z.toFixed(5)
+	}
 }
 
 
 function downloadAccelerationProfile() {
     const link = document.createElement("a");
-    const content = JSON.stringify(accelerationData)
+    const content = JSON.stringify({"NoG": accelerationData, "G": gAccelerationData})
     const file = new Blob([content], { type: 'text/plain' });
     link.href = URL.createObjectURL(file);
     link.download = "acceleration_profile.txt";
