@@ -50,28 +50,39 @@ function handleMotion(event) {
 	}
 }
 
+//https://stackoverflow.com/questions/30216167/chartjs-plot-data-based-with-unequal-time-intervals
+//https://dima117.github.io/Chart.Scatter/
+//https://www.tutorialspoint.com/chartjs/chartjs_scatter_chart.htm
 function makeChart(xValues, yValues){
-		new Chart("chart", {
-			type: "line",
-			data: {
-				labels: xValues,
-				datasets: [{
-				fill: false,
-				lineTension: 0,
-				backgroundColor: "rgba(0,0,255,1.0)",
-				borderColor: "rgba(0,0,255,0.1)",
-				data: yValues
-				}]
-			},
-			options: {
-				legend: {display: false},
-				scales: {
-				yAxes: [{ticks: {
-					min: Math.min.apply(this, yValues), 
-					max: Math.max.apply(this, yValues)
-				}}],
+	var chrt = document.getElementById("chart").getContext("2d");
+    var chartId = new Chart(chrt, {
+		type: 'scatter',
+        data: {
+			labels: ["HTML", "CSS", "JAVASCRIPT", "CHART.JS", "JQUERY", "BOOTSTRP"],
+            datasets: [{
+				label: "online tutorial subjects",
+				data: [
+					{x:10, y:14},
+					{x:25, y:35},
+					{x:21, y:20},
+					{x:35, y:28},
+					{x:15, y:10},
+					{x:19, y:30},
+				],
+				backgroundColor: ['yellow', 'aqua', 'pink', 'lightgreen', 'gold', 'lightblue'],
+				borderColor: ['black'],
+				radius: 8,
+			}],
+		},
+        options: {
+			responsive: false,
+            scales: {
+				x: {
+					type: 'linear',
+					position: 'bottom,'
+				}
 			}
-		}
-	});
+        },
+    });
 }
-
+	
