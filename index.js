@@ -1,16 +1,17 @@
-//https://stackoverflow.com/questions/29971898/how-to-create-an-accurate-timer-in-javascript
-//https://sensor-js.xyz/demo.html
-//https://www.tutorialspoint.com/how-to-create-and-save-text-file-in-javascript
-
 dateLoaded = Date.now()
 start = Date.now()
 running = false
 elapsed = 0
 clockID = null
 accelerationData = []
+charts = []
 
 function TimerButton() {
 	if(!running){
+		for(chart of charts){
+			chart.destroy()
+		}
+		document.getElementById("TimerButton").innerText = "stop";
 		window.addEventListener("devicemotion", handleMotion);
 		stopped = false
 		running = true
@@ -27,6 +28,7 @@ function TimerButton() {
 	else if(running){
 		window.removeEventListener("devicemotion", handleMotion);
 		running = false
+		document.getElementById("TimerButton").innerText = "start";
 		elapsed = 0
 		clearInterval(clockID)
 		makeCharts(accelerationData)
@@ -44,12 +46,6 @@ function handleMotion(event) {
 	}
 }
 
-//https://stackoverflow.com/questions/30216167/chartjs-plot-data-based-with-unequal-time-intervals
-//https://dima117.github.io/Chart.Scatter/
-//https://www.tutorialspoint.com/chartjs/chartjs_scatter_chart.htm
-//https://stackoverflow.com/questions/46232699/display-line-chart-with-connected-dots-using-chartjs
-//https://stackoverflow.com/questions/42768494/how-to-remove-rectangle-box-next-to-the-legend-text-in-chart-js
-//https://github.com/chartjs/Chart.js/discussions/11441
 function makeCharts(accelerationData){
 	xData = []
 	yData = []
@@ -69,12 +65,11 @@ function makeCharts(accelerationData){
 		black.push("black")
 	}
 	
-	makeChart("x", xData, red)
-	makeChart("y", yData, yellow)
-	makeChart("z", zData, orange)
+	charts.push(makeChart("x", xData, red))
+	charts.push(makeChart("y", yData, yellow))
+	charts.push(makeChart("z", zData, orange))
 }
 
-//https://www.chartjs.org/docs/latest/charts/line.html
 function makeChart(id, data, pointColor){
 	var chrt = document.getElementById("chart"+id).getContext("2d");
     var chartId = new Chart(chrt, {
@@ -87,7 +82,7 @@ function makeChart(id, data, pointColor){
 				borderColor: "black",
 				fill: false,
 				showLine: true,
-				tension: 0,
+				tension: 0, //tension does not seem to work. known bug it seems?
 				borderWidth: 1.5,
 				radius: 2,
 			}],
@@ -107,5 +102,6 @@ function makeChart(id, data, pointColor){
 			}
         },
     });
+	return chartId;
 }
 	
