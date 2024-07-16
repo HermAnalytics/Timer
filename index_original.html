@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="index.css">
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<body>
+ 
+<div class="center"> 
+<p class="Display" id="Display"> 0.00 </p>
+<button class="TimerButton" id="TimerButton" type="button" onclick="TimerButton()">start</button> 
+<li>x accel: <span id="x_acceleration">0.00000</span><span> m/s<sup>2</sup></span></li>
+<li>y accel: <span id="y_acceleration">0.00000</span><span> m/s<sup>2</sup></span></li>
+<li>z accel: <span id="z_acceleration">0.00000</span><span> m/s<sup>2</sup></span></li>
+</div>
+
+<div class="charts">
+<canvas id="chartx" style="width:100%"></canvas><br><br>
+<canvas id="charty" style="width:100%"></canvas><br><br>
+<canvas id="chartz" style="width:100%"></canvas><br><br>
+</div>
+
+</body>
+<script src="index.js"></script> 

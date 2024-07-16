@@ -1,24 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<link rel="stylesheet" href="index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HermAthletics</title>
+	
+	<link rel="stylesheet" href="index.css">
+
 </head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <body>
- 
-<div class="center"> 
-<p class="Display" id="Display"> 0.00 </p>
-<button class="TimerButton" id="TimerButton" type="button" onclick="TimerButton()">start</button> 
-<li>x accel: <span id="x_acceleration">0.00000</span><span> m/s<sup>2</sup></span></li>
-<li>y accel: <span id="y_acceleration">0.00000</span><span> m/s<sup>2</sup></span></li>
-<li>z accel: <span id="z_acceleration">0.00000</span><span> m/s<sup>2</sup></span></li>
+
+<div class="container">
+
+<div class="full-span"> 
+	<div class="title">HermAthletics</div>
+	<div class="subtitle">Running Performance Calculator</div>
+</div>
+	
+<div class="box box1">
+<div class="instructions">
+	<h1> How To Use </h1><br>
+	In the yellow box, enter the time it takes you to run two different distances. Then, make a selection from the dropdown menu. Estimate your potential in the chosen distance by clicking submit.
+	<br><br>
+	With proper use, the calculator can be accurate to within one percent. Read the <a href="#best_practices">Best Practices</a> to ensure you get realistic results.
+</div>
 </div>
 
-<div class="charts">
-<canvas id="chartx" style="width:100%"></canvas><br><br>
-<canvas id="charty" style="width:100%"></canvas><br><br>
-<canvas id="chartz" style="width:100%"></canvas><br><br>
+<div class="box box2">
+<div class="calculator">
+<form action="/calculate" method="post">
+	<table>
+	  <tr>
+		<th> <b>Distance</b> <br> <font size="2">(meters)</font></th>
+		<th> <b>Time</b> <br> <font size="2">(mm:ss.ss)</font></th>
+	  </tr>
+	  <tr>
+		<td> <hr> <input class="distance_input" type="text" id="distance1" name="distance1" placeholder="0"> </td>
+		<td> <hr> <input maxlength="2" placeholder="00" class="time_input" type="text" id="minutes_distance1" name="minutes_distance1">:<input maxlength="2" placeholder="00" class="time_input" type="text" id="seconds_distance1" name="seconds_distance1">.<input maxlength="2" placeholder="00" class="time_input" type="text" id="milliseconds_distance1" name="milliseconds_distance1"> </td>
+	  </tr>
+	  <tr>
+		<td> <input class="distance_input" type="text" id="distance2" name="distance2" placeholder="0"> </td>
+		<td> <input maxlength="2" placeholder="00" class="time_input" type="text" id="minutes_distance2" name="minutes_distance2">:<input maxlength="2" placeholder="00" class="time_input" type="text" id="seconds_distance2" name="seconds_distance2">.<input maxlength="2" placeholder="00" class="time_input" type="text" id="milliseconds_distance2" name="milliseconds_distance2"> </td>
+	  </tr>
+	  <tr>
+		<td> 
+			<hr>
+			<select class="distance_output" name="distance_output" id="distance_output">
+			<option value="200">200m</option>
+			<option value="400">400m</option>
+			<option value="800">800m</option>
+			<option value="1500">1500m</option>
+			<option value="1609">Mile</option>
+			<option value="3000">3km</option>
+			<option value="5000">5km</option>
+			<option value="10000">10km</option>
+			</select>  
+		</td>
+		<td> 
+			<hr>
+			<input maxlength="2" value="00" class="time_output" type="text" id="minutes_output" disabled="disabled">:<input maxlength="2" value="00" class="time_output" type="text" id="seconds_output" disabled="disabled">.<input maxlength="2" value="00" class="time_output" type="text" id="milliseconds_output" disabled="disabled"> 
+		</td>
+	  </tr>
+	  <tr>
+		<td><input type="submit" value="Submit" class="submit"></td>	
+	  </tr>
+	</table>
+</form>
+</div>
+</div>
+
+<div class="full-span"> 
+	<p class="about_title">About</p>
+    <div class="about">
+		<!-- TODO: https://stackoverflow.com/questions/28207761/where-does-flask-look-for-image-files -->
+		<img src="../static/img/pic.jpg" alt="Image of myself" class="image">
+        <p> This running calculator is the culmination of about 3,000 hours of research, and over a decades worth of experience as an athlete and coach. My goal is 
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus consequat urna id dui pharetra, eu rhoncus velit efficitur. Sed id metus posuere, faucibus velit id, mollis turpis. Duis non fermentum libero. Fusce in vestibulum sem. Integer dapibus mauris et tortor sagittis, sed rutrum eros aliquam. Etiam auctor sapien vel odio congue interdum. Phasellus aliquam nunc nisl, a commodo erat efficitur at. Nam sollicitudin massa non lobortis consequat. Donec fringilla volutpat tincidunt. Donec ac mi neque.</p>
+        <br>
+		<p>Nulla auctor magna id elit convallis, a ultrices mi eleifend. Mauris vehicula sapien sed magna pharetra, sed dignissim velit lobortis. Cras eu leo nec felis congue tempus in non lectus. Fusce auctor convallis ipsum, a consequat lectus tempus eget. Proin vel urna neque. In nec libero id leo scelerisque egestas. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis vitae orci erat.</p>
+    </div>
+</div>
+	
+<div class="box box3">Box 3</div>
+<div class="box box4">Box 4</div>
+	
+<div class="box box5">Box 5</div>
+<div class="box box6">Box 6</div>
+
 </div>
 
 </body>
-<script src="index.js"></script> 
+<script src=""></script> 
+</html>
